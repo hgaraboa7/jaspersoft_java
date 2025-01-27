@@ -1,0 +1,112 @@
+<!-- Created with Jaspersoft Studio version 7.0.1.final using JasperReports Library version 7.0.1-573496633c2b4074e32f433154b543003f7d2498  -->
+<jasperReport name="Blank_A4_3" language="java" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="14adb23d-458e-438a-96bb-a95150f393f4">
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="New Data Adapter"/>
+	<query language="SQL"><![CDATA[SELECT
+    c.Code AS CodigoPais,
+    c.Name AS nombre,
+    c.Population AS Poblacion,
+    cl.Language AS idioma,
+    (SELECT COUNT(cl.Language) FROM countrylanguage cl where cl.countrycode=c.code GROUP BY cl.countrycode)AS numeroIdiomas
+FROM
+    country c
+LEFT JOIN
+    countrylanguage cl
+ON
+    c.Code = cl.CountryCode
+WHERE
+    cl.Percentage = (SELECT MAX(Percentage) FROM countrylanguage WHERE CountryCode = c.Code)
+GROUP BY
+    c.Code, c.Name, c.Population, cl.Language
+]]></query>
+	<field name="CodigoPais" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="Code"/>
+		<property name="com.jaspersoft.studio.field.label" value="CodigoPais"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="country"/>
+	</field>
+	<field name="nombre" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="Name"/>
+		<property name="com.jaspersoft.studio.field.label" value="nombre"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="country"/>
+	</field>
+	<field name="Poblacion" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="Population"/>
+		<property name="com.jaspersoft.studio.field.label" value="Poblacion"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="country"/>
+	</field>
+	<field name="idioma" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="Language"/>
+		<property name="com.jaspersoft.studio.field.label" value="idioma"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="countrylanguage"/>
+	</field>
+	<field name="numeroIdiomas" class="java.lang.Long">
+		<property name="com.jaspersoft.studio.field.name" value="numeroIdiomas"/>
+		<property name="com.jaspersoft.studio.field.label" value="numeroIdiomas"/>
+	</field>
+	<group name="CodigoPais">
+		<expression><![CDATA[$F{CodigoPais}]]></expression>
+	</group>
+	<group name="nombre">
+		<expression><![CDATA[$F{nombre}]]></expression>
+	</group>
+	<group name="Poblacion">
+		<expression><![CDATA[$F{Poblacion}]]></expression>
+	</group>
+	<group name="idioma">
+		<expression><![CDATA[$F{idioma}]]></expression>
+	</group>
+	<group name="numeroIdiomas">
+		<expression><![CDATA[$F{numeroIdiomas}]]></expression>
+	</group>
+	<background splitType="Stretch"/>
+	<title height="79" splitType="Stretch"/>
+	<pageHeader height="35" splitType="Stretch"/>
+	<columnHeader height="49" splitType="Stretch">
+		<element kind="staticText" uuid="bbd59aad-1726-4cf5-991d-b1f6f59d31df" x="220" y="0" width="140" height="30" fontSize="12.0" bold="true">
+			<text><![CDATA[idioma mayoritario]]></text>
+		</element>
+		<element kind="staticText" uuid="820d2398-7bdb-4f9c-8235-63ded82ed2f9" x="360" y="0" width="130" height="30" fontSize="12.0" bold="true">
+			<text><![CDATA[numero de idiomas]]></text>
+		</element>
+		<element kind="staticText" uuid="d5164e1b-50a1-4402-9c56-703e30fbbeff" x="120" y="0" width="100" height="30" fontSize="12.0" bold="true">
+			<text><![CDATA[poblacion]]></text>
+		</element>
+		<element kind="staticText" uuid="747775d2-3c55-4ef1-996e-cb53c1c0fbc2" x="50" y="0" width="70" height="30" fontSize="12.0" bold="true">
+			<text><![CDATA[nombre]]></text>
+		</element>
+		<element kind="staticText" uuid="fbb274dd-b0f8-45bd-88d7-c5a1eff13e76" x="0" y="0" width="50" height="30" fontSize="12.0" bold="true">
+			<text><![CDATA[codigo]]></text>
+		</element>
+	</columnHeader>
+	<detail>
+		<band height="86" splitType="Stretch">
+			<element kind="textField" uuid="10ebd2b5-df0c-4c9a-a283-590b5dbc8203" x="0" y="50" width="60" height="30">
+				<expression><![CDATA[$F{CodigoPais}]]></expression>
+				<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="bd4cfce3-8479-4e19-9165-ba9e01a714ee"/>
+			</element>
+			<element kind="textField" uuid="6b96b8d2-b479-40b0-80c4-e9a929513fe8" x="60" y="50" width="100" height="30">
+				<expression><![CDATA[$F{nombre}]]></expression>
+				<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="a745b422-6680-49be-b3db-4fd6b681d3cd"/>
+			</element>
+			<element kind="textField" uuid="d40904cc-984b-4c1a-97b7-cbc379837224" x="160" y="50" width="100" height="30">
+				<expression><![CDATA[$F{Poblacion}]]></expression>
+				<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="bb58ea67-7c8a-46eb-8600-f02cd8342f9e"/>
+			</element>
+			<element kind="textField" uuid="ec5aec96-c4b3-40ef-9ac6-f40bc515be6a" x="260" y="50" width="100" height="30">
+				<expression><![CDATA[$F{idioma}]]></expression>
+				<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="f2341a6b-dc0f-47c5-9696-6fd3706e5c04"/>
+			</element>
+			<element kind="textField" uuid="0d1b9a73-7a36-4a86-a44d-00ff8c92139e" key="" x="370" y="50" width="100" height="30">
+				<expression><![CDATA[$F{numeroIdiomas}]]></expression>
+				<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="7f0ee74a-a3cd-42b7-9736-4ab3e81bd7f2"/>
+			</element>
+		</band>
+	</detail>
+	<columnFooter height="45" splitType="Stretch"/>
+	<pageFooter height="54" splitType="Stretch"/>
+	<summary height="48" splitType="Stretch">
+		<element kind="textField" uuid="f0d5ba1a-7a09-414b-9930-199203b77289" key="" x="421" y="12" width="100" height="30">
+			<expression><![CDATA[$V{numeroIdiomas_COUNT}]]></expression>
+		</element>
+	</summary>
+</jasperReport>

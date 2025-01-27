@@ -1,0 +1,59 @@
+<!-- Created with Jaspersoft Studio version 7.0.1.final using JasperReports Library version 7.0.1-573496633c2b4074e32f433154b543003f7d2498  -->
+<jasperReport name="Blank_A4_6" language="java" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="c73b8b76-5f06-4866-a080-686098eb740a">
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="sakila"/>
+	<parameter name="id_pelicula" class="java.lang.Integer"/>
+	<query language="SQL"><![CDATA[SELECT f.film_id,YEAR(rental_date), MONTH(rental_date), COUNT(*) rented
+FROM film f
+JOIN inventory i ON f.film_id = i.film_id
+JOIN rental r ON i.inventory_id = r.inventory_id
+WHERE f.film_id =  $P{id_pelicula} 
+GROUP BY f.film_id, YEAR(rental_date), MONTH(rental_date)]]></query>
+	<field name="film_id" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="film_id"/>
+		<property name="com.jaspersoft.studio.field.label" value="film_id"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="film"/>
+	</field>
+	<field name="YEAR(rental_date)" class="java.lang.Long">
+		<property name="com.jaspersoft.studio.field.name" value="YEAR(rental_date)"/>
+		<property name="com.jaspersoft.studio.field.label" value="YEAR(rental_date)"/>
+	</field>
+	<field name="MONTH(rental_date)" class="java.lang.Long">
+		<property name="com.jaspersoft.studio.field.name" value="MONTH(rental_date)"/>
+		<property name="com.jaspersoft.studio.field.label" value="MONTH(rental_date)"/>
+	</field>
+	<field name="rented" class="java.lang.Long">
+		<property name="com.jaspersoft.studio.field.name" value="rented"/>
+		<property name="com.jaspersoft.studio.field.label" value="rented"/>
+	</field>
+	<background splitType="Stretch"/>
+	<title height="79" splitType="Stretch"/>
+	<pageHeader height="35" splitType="Stretch"/>
+	<columnHeader height="61" splitType="Stretch">
+		<element kind="staticText" uuid="f6f96294-323e-41d9-8f62-73c7904dcef6" x="57" y="0" width="100" height="30">
+			<text><![CDATA[film_id]]></text>
+			<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="fbcee06a-b9f0-41fd-aa01-4387310e72bd"/>
+		</element>
+	</columnHeader>
+	<detail>
+		<band height="246" splitType="Stretch">
+			<element kind="textField" uuid="d60ff436-411e-40f4-a65f-a7e12f98c41f" x="57" y="40" width="100" height="30">
+				<expression><![CDATA[$F{film_id}]]></expression>
+				<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="fbcee06a-b9f0-41fd-aa01-4387310e72bd"/>
+			</element>
+			<element kind="chart" chartType="line" uuid="5ca6be82-98da-4ae2-9f25-9b99989ce2b6" x="130" y="46" width="373" height="200" evaluationTime="Report">
+				<dataset kind="category">
+					<series>
+						<seriesExpression><![CDATA["SERIES 1"]]></seriesExpression>
+						<categoryExpression><![CDATA[$F{YEAR(rental_date)}+" -"+$F{MONTH(rental_date)}]]></categoryExpression>
+						<valueExpression><![CDATA[$F{rented}]]></valueExpression>
+					</series>
+				</dataset>
+				<plot categoryAxisLabelColor="#000000" categoryAxisTickLabelColor="#000000" categoryAxisLineColor="#000000" valueAxisLabelColor="#000000" valueAxisTickLabelColor="#000000" valueAxisLineColor="#000000"/>
+			</element>
+		</band>
+	</detail>
+	<columnFooter height="45" splitType="Stretch"/>
+	<pageFooter height="54" splitType="Stretch"/>
+	<summary height="42" splitType="Stretch"/>
+</jasperReport>

@@ -1,0 +1,64 @@
+<!-- Created with Jaspersoft Studio version 7.0.1.final using JasperReports Library version 7.0.1-573496633c2b4074e32f433154b543003f7d2498  -->
+<jasperReport name="Blank_A4_5" language="java" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="a068b4f8-bfa4-4164-bb59-9735aee118bf">
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="sakila"/>
+	<parameter name="nombrecliente" class="java.lang.String"/>
+	<query language="SQL"><![CDATA[SELECT f.title, r.customer_id,cus.first_name from film f
+inner join inventory i
+on i.film_id=f.film_id
+inner join rental r
+on r.inventory_id=i.inventory_id
+inner join customer cus
+on r.customer_id=cus.customer_id
+where cus.customer_id= $P{nombrecliente} 
+
+]]></query>
+	<field name="title" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="title"/>
+		<property name="com.jaspersoft.studio.field.label" value="title"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="film"/>
+	</field>
+	<field name="customer_id" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="customer_id"/>
+		<property name="com.jaspersoft.studio.field.label" value="customer_id"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="rental"/>
+	</field>
+	<field name="first_name" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="first_name"/>
+		<property name="com.jaspersoft.studio.field.label" value="first_name"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="customer"/>
+	</field>
+	<variable name="nombre" class="java.lang.String"/>
+	<group name="title">
+		<expression><![CDATA[$F{title}]]></expression>
+	</group>
+	<group name="customer_id">
+		<expression><![CDATA[$F{customer_id}]]></expression>
+	</group>
+	<group name="first_name">
+		<expression><![CDATA[$F{first_name}]]></expression>
+	</group>
+	<background splitType="Stretch"/>
+	<title height="79" splitType="Stretch"/>
+	<pageHeader height="35" splitType="Stretch"/>
+	<columnHeader height="61" splitType="Stretch">
+		<element kind="textField" uuid="2c097d5f-045c-4c28-9e9b-082ceb642442" x="182" y="0" width="100" height="30">
+			<expression><![CDATA[$F{first_name}]]></expression>
+		</element>
+		<element kind="staticText" uuid="a79e568a-67c5-4c36-beb5-d8101fcf87d4" x="82" y="0" width="100" height="30">
+			<text><![CDATA[title]]></text>
+			<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="7454852d-1ea8-41f1-98ca-1959813f8d9c"/>
+		</element>
+		<element kind="textField" uuid="4f072cf5-c426-48c3-b703-b99412bf8006" x="282" y="0" width="100" height="30">
+			<expression><![CDATA[$F{customer_id}]]></expression>
+		</element>
+	</columnHeader>
+	<detail>
+		<band height="64" splitType="Stretch">
+			<element kind="textField" uuid="ac7e4ec6-7d20-44b6-bf04-4320303887a2" x="82" y="10" width="100" height="30">
+				<expression><![CDATA[$F{title}]]></expression>
+				<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="7454852d-1ea8-41f1-98ca-1959813f8d9c"/>
+			</element>
+		</band>
+	</detail>
+</jasperReport>

@@ -1,0 +1,73 @@
+<!-- Created with Jaspersoft Studio version 7.0.1.final using JasperReports Library version 7.0.1-573496633c2b4074e32f433154b543003f7d2498  -->
+<jasperReport name="Blank_A4_4" language="java" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="4c415b95-9139-4412-8674-3fa773254b36">
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="New Data Adapter"/>
+	<parameter name="MINIMO" class="java.lang.Long"/>
+	<query language="SQL"><![CDATA[SELECT c.code, c.name, c.population, c.LifeExpectancy 
+FROM country c
+where c.population>= $P{MINIMO} 
+ ORDER BY c.population desc 
+]]></query>
+	<field name="code" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="Code"/>
+		<property name="com.jaspersoft.studio.field.label" value="code"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="country"/>
+	</field>
+	<field name="name" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="Name"/>
+		<property name="com.jaspersoft.studio.field.label" value="name"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="country"/>
+	</field>
+	<field name="population" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="Population"/>
+		<property name="com.jaspersoft.studio.field.label" value="population"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="country"/>
+	</field>
+	<field name="LifeExpectancy" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="LifeExpectancy"/>
+		<property name="com.jaspersoft.studio.field.label" value="LifeExpectancy"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="country"/>
+	</field>
+	<group name="code">
+		<expression><![CDATA[$F{code}]]></expression>
+	</group>
+	<group name="name">
+		<expression><![CDATA[$F{name}]]></expression>
+	</group>
+	<group name="LifeExpectancy">
+		<expression><![CDATA[$F{LifeExpectancy}]]></expression>
+	</group>
+	<background splitType="Stretch"/>
+	<title height="79" splitType="Stretch"/>
+	<pageHeader height="35" splitType="Stretch"/>
+	<columnHeader height="61" splitType="Stretch">
+		<element kind="staticText" uuid="5762550f-175f-441d-940d-10222adb534c" x="80" y="0" width="100" height="30">
+			<text><![CDATA[code]]></text>
+			<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="cdbab635-142d-4770-a9d3-453b98bf543a"/>
+		</element>
+		<element kind="staticText" uuid="e0a8591e-fc40-46fb-ba8a-e878fea75d6a" x="180" y="0" width="100" height="30">
+			<text><![CDATA[name]]></text>
+			<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="30c936b1-ba53-49bf-9872-4f5bef273fcd"/>
+		</element>
+		<element kind="staticText" uuid="72b2673f-5d6b-4c15-b551-edbbe8d10ba9" x="280" y="0" width="100" height="30">
+			<text><![CDATA[population]]></text>
+			<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="2624369d-0944-4175-8d9b-44032a841ed8"/>
+		</element>
+	</columnHeader>
+	<detail>
+		<band height="61" splitType="Stretch">
+			<element kind="textField" uuid="cb0d6040-1b1f-4bcf-a0c7-cfd7b1987c57" x="80" y="20" width="100" height="30">
+				<expression><![CDATA[$F{code}]]></expression>
+				<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="cdbab635-142d-4770-a9d3-453b98bf543a"/>
+			</element>
+			<element kind="textField" uuid="a7088e8a-01f4-45b6-8937-6b2f9d3be522" x="180" y="20" width="100" height="30">
+				<expression><![CDATA[$F{name}]]></expression>
+				<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="30c936b1-ba53-49bf-9872-4f5bef273fcd"/>
+			</element>
+			<element kind="textField" uuid="3bbbe09c-a8de-4604-9fde-4a3fdf41342f" x="280" y="20" width="100" height="30">
+				<expression><![CDATA[$F{population}/1000000+ " Millones"]]></expression>
+				<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="2624369d-0944-4175-8d9b-44032a841ed8"/>
+			</element>
+		</band>
+	</detail>
+</jasperReport>

@@ -1,0 +1,73 @@
+<!-- Created with Jaspersoft Studio version 7.0.1.final using JasperReports Library version 7.0.1-573496633c2b4074e32f433154b543003f7d2498  -->
+<jasperReport name="Blank_A4_2" language="java" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="e3f5db45-6a33-4994-9854-e55d728d78b7">
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w1" value="355"/>
+	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w2" value="633"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="New Data Adapter"/>
+	<query language="SQL"><![CDATA[SELECT
+    c.Code AS CodigoPais,
+    c.Name AS nombre,
+    c.Population AS Poblacion,
+    cl.Language AS idioma,
+    COUNT(cl.Language) AS numeroIdiomas
+FROM
+    country c
+LEFT JOIN
+    countrylanguage cl
+ON
+    c.Code = cl.CountryCode
+WHERE
+    cl.Percentage = (SELECT MAX(Percentage) FROM countrylanguage WHERE CountryCode = c.Code)
+GROUP BY
+    c.Code, c.Name, c.Population, cl.Language;
+]]></query>
+	<field name="CodigoPais" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="Code"/>
+		<property name="com.jaspersoft.studio.field.label" value="CodigoPais"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="country"/>
+	</field>
+	<field name="nombre" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="Name"/>
+		<property name="com.jaspersoft.studio.field.label" value="nombre"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="country"/>
+	</field>
+	<field name="Poblacion" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="Population"/>
+		<property name="com.jaspersoft.studio.field.label" value="Poblacion"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="country"/>
+	</field>
+	<field name="idioma" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="Language"/>
+		<property name="com.jaspersoft.studio.field.label" value="idioma"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="countrylanguage"/>
+	</field>
+	<field name="numeroIdiomas" class="java.lang.Long">
+		<property name="com.jaspersoft.studio.field.name" value="numeroIdiomas"/>
+		<property name="com.jaspersoft.studio.field.label" value="numeroIdiomas"/>
+	</field>
+	<group name="CodigoPais">
+		<expression><![CDATA[$F{CodigoPais}]]></expression>
+	</group>
+	<group name="nombre">
+		<expression><![CDATA[$F{nombre}]]></expression>
+	</group>
+	<group name="Poblacion">
+		<expression><![CDATA[$F{Poblacion}]]></expression>
+	</group>
+	<group name="idioma">
+		<expression><![CDATA[$F{idioma}]]></expression>
+	</group>
+	<group name="numeroIdiomas">
+		<expression><![CDATA[$F{numeroIdiomas}]]></expression>
+	</group>
+	<background splitType="Stretch"/>
+	<title height="79" splitType="Stretch"/>
+	<pageHeader height="35" splitType="Stretch"/>
+	<columnHeader height="61" splitType="Stretch"/>
+	<detail>
+		<band height="125" splitType="Stretch"/>
+	</detail>
+	<columnFooter height="45" splitType="Stretch"/>
+	<pageFooter height="54" splitType="Stretch"/>
+	<summary height="42" splitType="Stretch"/>
+</jasperReport>
