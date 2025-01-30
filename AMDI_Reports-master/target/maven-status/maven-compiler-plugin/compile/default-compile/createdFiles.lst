@@ -1,9 +1,9 @@
 com\fernandowirtz\reportsexample\SavePdfChooser.class
 com\fernandowirtz\reportsexample\reports\ReportService.class
+com\fernandowirtz\reportsexample\dao\Customer.class
 com\fernandowirtz\reportsexample\MainFrame$2.class
 com\fernandowirtz\reportsexample\MainFrame$3.class
 com\fernandowirtz\reportsexample\reports\Report.class
 com\fernandowirtz\reportsexample\MainFrame$1.class
-com\fernandowirtz\reportsexample\MainFrame$4.class
 com\fernandowirtz\reportsexample\MainFrame.class
 com\fernandowirtz\reportsexample\SavePdfChooser$1.class

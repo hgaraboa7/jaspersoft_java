@@ -1,12 +1,15 @@
 package com.fernandowirtz.reportsexample.reports;
 
 import com.fernandowirtz.reportsexample.MainFrame;
+import com.fernandowirtz.reportsexample.dao.Customer;
 import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -29,7 +32,7 @@ public class ReportService {
     private final String password;
     
     public DefaultListModel modeloLista= new DefaultListModel();
-    
+    private List<Customer> listaClientes = new ArrayList<>();
     
 
     public ReportService(String url, String user, String password) {
@@ -52,27 +55,27 @@ public class ReportService {
         }
     }
 
-    public void cargarEmail(JList<String> listEmail) {
-  
-          try (Connection con = DriverManager.getConnection(url, user, password)) {
-          
-              
-              Statement state=con.createStatement();
-              ResultSet rs=state.executeQuery("SELECT first_name,email FROM sakila.customer;");
-              while(rs.next()){
-                  modeloLista.addElement(rs.getString(1)+": "+rs.getString(2));
-              }
-              listEmail.setModel(modeloLista);
-              
-              
-          } catch (SQLException ex) {
-            Logger.getLogger(ReportService.class.getName()).log(Level.SEVERE, null, ex);
+   public void cargarEmail(JList<Customer> listEmail) {
+    try (Connection con = DriverManager.getConnection(url, user, password)) {
+        Statement state = con.createStatement();
+        ResultSet rs = state.executeQuery("SELECT customer_id, first_name, email FROM sakila.customer");
+
+        while(rs.next()){
+            int customerId = rs.getInt(1);
+            String firstName = rs.getString(2);
+            String email = rs.getString(3);
+
+            Customer c = new Customer(customerId, firstName, email);
+            listaClientes.add(c);
+            modeloLista.addElement(c); 
         }
-        
-        
-        
-        
+        listEmail.setModel(modeloLista);
+
+    } catch (SQLException ex) {
+        Logger.getLogger(ReportService.class.getName()).log(Level.SEVERE, null, ex);
     }
+}
+
         
     
     

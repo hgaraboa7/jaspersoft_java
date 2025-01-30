@@ -1,0 +1,106 @@
+<!-- Created with Jaspersoft Studio version 7.0.1.final using JasperReports Library version 7.0.1-573496633c2b4074e32f433154b543003f7d2498  -->
+<jasperReport name="Blank_A4_8" language="java" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="c71c0ff8-121a-4e5b-b9e8-5341997071de">
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="sakila"/>
+	<parameter name="ID_CLIENTE" class="java.lang.Integer"/>
+	<query language="SQL"><![CDATA[SELECT
+  c.first_name AS nombre,
+  c.last_name AS apellido,
+  c.email AS email,
+  f.title AS titulo,
+  r.rental_date AS fecha_alquiler,
+  r.return_date AS fecha_devolucion
+FROM customer c
+JOIN rental r ON c.customer_id = r.customer_id
+JOIN inventory i ON r.inventory_id = i.inventory_id
+JOIN film f ON i.film_id = f.film_id
+WHERE c.customer_id = $P{ID_CLIENTE}
+ORDER BY r.rental_date
+]]></query>
+	<field name="nombre" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="first_name"/>
+		<property name="com.jaspersoft.studio.field.label" value="nombre"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="customer"/>
+	</field>
+	<field name="apellido" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="last_name"/>
+		<property name="com.jaspersoft.studio.field.label" value="apellido"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="customer"/>
+	</field>
+	<field name="email" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="email"/>
+		<property name="com.jaspersoft.studio.field.label" value="email"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="customer"/>
+	</field>
+	<field name="titulo" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="title"/>
+		<property name="com.jaspersoft.studio.field.label" value="titulo"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="film"/>
+	</field>
+	<field name="fecha_alquiler" class="java.time.LocalDateTime">
+		<property name="com.jaspersoft.studio.field.name" value="rental_date"/>
+		<property name="com.jaspersoft.studio.field.label" value="fecha_alquiler"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="rental"/>
+	</field>
+	<field name="fecha_devolucion" class="java.time.LocalDateTime">
+		<property name="com.jaspersoft.studio.field.name" value="return_date"/>
+		<property name="com.jaspersoft.studio.field.label" value="fecha_devolucion"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="rental"/>
+	</field>
+	<variable name="alquiladas" calculation="Count" class="java.lang.Integer">
+		<expression><![CDATA[$F{fecha_alquiler}]]></expression>
+	</variable>
+	<variable name="devueltas" calculation="Count" class="java.lang.Integer">
+		<expression><![CDATA[$F{fecha_devolucion}.equals( null )]]></expression>
+	</variable>
+	<background splitType="Stretch"/>
+	<title height="79" splitType="Stretch">
+		<element kind="textField" uuid="f0ae5c83-b08d-47bc-91c4-0af00d34e6cd" x="80" y="31" width="210" height="30">
+			<expression><![CDATA["PELICULAS ALQUILADAS"]]></expression>
+		</element>
+	</title>
+	<pageHeader height="49" splitType="Stretch">
+		<element kind="textField" uuid="1091e687-217a-41e7-9a6d-48e1bdbddd90" x="60" y="9" width="290" height="30">
+			<expression><![CDATA["Cliente: "+$F{nombre}+" "+$F{apellido}+" ("+$F{email}+")"]]></expression>
+		</element>
+	</pageHeader>
+	<columnHeader height="37" splitType="Stretch">
+		<element kind="staticText" uuid="b5e9722c-40c9-43f3-abc0-3a0986485197" x="60" y="0" width="100" height="30">
+			<text><![CDATA[titulo]]></text>
+			<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="72827a07-e46a-450c-b8ec-12554faeba9c"/>
+		</element>
+		<element kind="staticText" uuid="71a26feb-f8c6-4c8f-a413-c8b90071286f" x="180" y="0" width="100" height="30">
+			<text><![CDATA[fecha_alquiler]]></text>
+			<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="636871a6-d24c-4325-9558-89b453d9bd96"/>
+		</element>
+		<element kind="staticText" uuid="de44c1a5-66cc-4ead-904f-a5663e668316" x="300" y="0" width="100" height="30">
+			<text><![CDATA[fecha_devolucion]]></text>
+			<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="cd9c0b8f-c8ba-4696-912b-e78ad2b4d9dd"/>
+		</element>
+	</columnHeader>
+	<detail>
+		<band height="40" splitType="Stretch">
+			<element kind="textField" uuid="16314e34-4d30-467c-a2fb-7dbe671dafc0" x="50" y="0" width="100" height="30">
+				<expression><![CDATA[$F{titulo}]]></expression>
+				<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="72827a07-e46a-450c-b8ec-12554faeba9c"/>
+			</element>
+			<element kind="textField" uuid="ef4e7ffb-6b56-4e9c-bba3-98c889d5c9d2" x="180" y="0" width="100" height="30">
+				<expression><![CDATA[$F{fecha_alquiler}]]></expression>
+				<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="636871a6-d24c-4325-9558-89b453d9bd96"/>
+			</element>
+			<element kind="textField" uuid="d2c323db-3328-497f-b1f1-a07f4cbbf91c" x="300" y="0" width="100" height="30">
+				<expression><![CDATA[$F{fecha_devolucion}]]></expression>
+				<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="cd9c0b8f-c8ba-4696-912b-e78ad2b4d9dd"/>
+			</element>
+		</band>
+	</detail>
+	<pageFooter height="54" splitType="Stretch"/>
+	<summary height="52" splitType="Stretch">
+		<element kind="textField" uuid="521f4fb9-6b38-4ed6-807c-1da0df9cecb0" x="280" y="20" width="100" height="30">
+			<expression><![CDATA["total alquiladad: "+$V{alquiladas}]]></expression>
+		</element>
+		<element kind="textField" uuid="f0e0840b-8ec2-40da-a3c2-d38f028daa38" x="390" y="20" width="100" height="30">
+			<expression><![CDATA["total devueltas: "+($V{devueltas})]]></expression>
+		</element>
+	</summary>
+</jasperReport>

@@ -1,7 +1,10 @@
 package com.fernandowirtz.reportsexample;
 
+import com.fernandowirtz.reportsexample.dao.Customer;
 import com.fernandowirtz.reportsexample.reports.ReportService;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -14,7 +17,7 @@ import javax.swing.JList;
  */
 public class MainFrame extends javax.swing.JFrame {
 
-    private static final String REPORT_PATH = "/reports/Blank_A4_3.jrxml";
+    private static final String REPORT_PATH = "/reports/reporteSakila1.jrxml";
 
     private final ReportService reportService;
 
@@ -36,12 +39,7 @@ public class MainFrame extends javax.swing.JFrame {
                 prop.getProperty("dbuser"),
                 prop.getProperty("dbpassword")
         );
-        
-        
-        
-        
-        
-        
+
     }
 
     /**
@@ -53,8 +51,6 @@ public class MainFrame extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        btnView = new javax.swing.JButton();
-        btnSave = new javax.swing.JButton();
         btnViewAndSave = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         listEmail = new javax.swing.JList<>();
@@ -66,20 +62,6 @@ public class MainFrame extends javax.swing.JFrame {
             }
         });
 
-        btnView.setText("View Report");
-        btnView.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnViewActionPerformed(evt);
-            }
-        });
-
-        btnSave.setText("Save Pdf");
-        btnSave.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnSaveActionPerformed(evt);
-            }
-        });
-
         btnViewAndSave.setText("View and Save");
         btnViewAndSave.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -87,6 +69,12 @@ public class MainFrame extends javax.swing.JFrame {
             }
         });
 
+        listEmail.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        listEmail.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
+            public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
+                listEmailValueChanged(evt);
+            }
+        });
         jScrollPane1.setViewportView(listEmail);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -94,30 +82,18 @@ public class MainFrame extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(btnSave, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btnViewAndSave, javax.swing.GroupLayout.DEFAULT_SIZE, 295, Short.MAX_VALUE)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 430, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(btnView, javax.swing.GroupLayout.PREFERRED_SIZE, 293, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(205, 205, 205))
+                    .addComponent(btnViewAndSave, javax.swing.GroupLayout.PREFERRED_SIZE, 295, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 430, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(62, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(btnView)
-                .addGap(50, 50, 50)
+                .addGap(73, 73, 73)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 212, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnSave, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(58, 58, 58)
                 .addComponent(btnViewAndSave)
                 .addContainerGap(60, Short.MAX_VALUE))
         );
@@ -126,41 +102,51 @@ public class MainFrame extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnViewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnViewActionPerformed
-        try {
-            reportService.get(REPORT_PATH).view();
-        } catch (Exception ex) {
-            Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }//GEN-LAST:event_btnViewActionPerformed
-
-    private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
-        SavePdfChooser chooser = new SavePdfChooser(this);
-        String dest = chooser.getFilePath();
-        try {
-            reportService.get(REPORT_PATH).toPdf(dest, true);
-        } catch (Exception ex) {
-            Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }//GEN-LAST:event_btnSaveActionPerformed
-
     private void btnViewAndSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnViewAndSaveActionPerformed
+        if (listEmail.isSelectionEmpty()) {
+            return;
+        }
+        Customer c = listEmail.getSelectedValue();
+        int idCliente = c.getId();
+
         SavePdfChooser chooser = new SavePdfChooser(this);
         String dest = chooser.getFilePath();
+        if (dest == null) {
+
+            return;
+        }
+
+        Map<String, Object> params = new HashMap<>();
+        params.put("ID_CLIENTE", idCliente);
+
         try {
-            reportService.get(REPORT_PATH).view().toPdf(dest, false);
+            reportService.get(REPORT_PATH, params).view();
+            reportService.get(REPORT_PATH, params).toPdf(dest, true);
         } catch (Exception ex) {
             Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_btnViewAndSaveActionPerformed
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
-        
+
         reportService.cargarEmail(listEmail);
-        
-        
-        
+       
+        btnViewAndSave.setEnabled(false);
+
+
     }//GEN-LAST:event_formWindowOpened
+
+    private void listEmailValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_listEmailValueChanged
+
+        if (listEmail.isSelectionEmpty()) {
+          
+            btnViewAndSave.setEnabled(false);
+        } else {
+           
+            btnViewAndSave.setEnabled(true);
+        }
+
+    }//GEN-LAST:event_listEmailValueChanged
 
     /**
      * @param args the command line arguments
@@ -195,27 +181,19 @@ public class MainFrame extends javax.swing.JFrame {
         });
     }
 
-    public JButton getBtnSave() {
-        return btnSave;
-    }
-
-    public JButton getBtnView() {
-        return btnView;
-    }
+ 
 
     public JButton getBtnViewAndSave() {
         return btnViewAndSave;
     }
 
-    public JList<String> getListEmail() {
+    public JList<Customer> getListEmail() {
         return listEmail;
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnSave;
-    private javax.swing.JButton btnView;
     private javax.swing.JButton btnViewAndSave;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JList<String> listEmail;
+    private javax.swing.JList<Customer> listEmail;
     // End of variables declaration//GEN-END:variables
 }
